@@ -3,7 +3,10 @@ import React from "react";
 import useTodoMock from "./hooks/useTodoMockData";
 
 const App = () => {
-  const { todoList, addTodo, deleteTodo, toggleTodo } = useTodoMock({ dataNum: 5 });
+  const { todoList, addTodo, deleteTodo, toggleTodo } = useTodoMock({
+    dataNum: 5,
+    contentLength: 20,
+  });
 
   return (
     <div>

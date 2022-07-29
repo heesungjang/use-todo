@@ -1,5 +1,5 @@
 // REACT
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 
 // External Libraries
 import { v4 as uuidv4 } from "uuid";
@@ -8,6 +8,7 @@ const PhaseGen = require("korean-random-words");
 // Types
 type Options = {
   dataNum: number;
+  contentLength: number;
 };
 
 type TodoItem = {
@@ -30,7 +31,6 @@ type TodoAction =
 
 type TodoListState = TodoItem[];
 
-//-------------------------------------------------------------//
 const todoReducer = (state: TodoListState, action: TodoAction): TodoListState => {
   switch (action.type) {
     case TodoActionKind.ADD: {
@@ -40,13 +40,11 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
 
     case TodoActionKind.DELETE: {
       const { id: targetedItemId } = action;
-
       return [...state].filter((todo) => todo.id !== targetedItemId);
     }
 
     case TodoActionKind.COMPLETE: {
       const { id: targetedItemId } = action;
-
       return [...state].map((todo) => {
         if (todo.id === targetedItemId) {
           return { ...todo, completed: !todo.completed };
@@ -54,22 +52,26 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
         return todo;
       });
     }
+
     default: {
       return state;
     }
   }
 };
-
-const generateTodoList = (dataNum: number): TodoListState => {
+const generateTitle = () => {
   const phaseGen = new PhaseGen();
   const phaseGenCustom = new PhaseGen({ customNouns: ["키우기", "만들기", "찾기"] });
 
+  return phaseGen.getNoun() + " " + phaseGenCustom.getNoun();
+};
+
+const generateTodoList = (dataNum: number, contentLength: number): TodoListState => {
   const todoList = Array(dataNum)
     .fill(0)
     .map(() => {
       return {
         id: uuidv4(),
-        title: phaseGen.getNoun() + " " + phaseGenCustom.getNoun(),
+        title: generateTitle(),
         completed: false,
       };
     });
@@ -77,9 +79,8 @@ const generateTodoList = (dataNum: number): TodoListState => {
   return todoList;
 };
 
-//
-const useTodoMock = ({ dataNum }: Options) => {
-  const initialState = generateTodoList(dataNum);
+const useTodoMock = ({ dataNum, contentLength = 50 }: Options) => {
+  const initialState = generateTodoList(dataNum, contentLength);
 
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
@@ -92,6 +93,8 @@ const useTodoMock = ({ dataNum }: Options) => {
   const deleteTodo = (id: string) => {
     dispatch({ type: TodoActionKind.DELETE, id });
   };
+
+  // Toggle a todo item completion (true / false)
   const toggleTodo = (id: string) => {
     dispatch({ type: TodoActionKind.COMPLETE, id });
   };
