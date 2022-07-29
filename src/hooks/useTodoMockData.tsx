@@ -10,37 +10,38 @@ type Options = {
   dataNum: number;
 };
 
-enum TodoActionKind {
-  ADD = "ADD",
-  DELETE = "DELETE",
-}
-
-type TodoAction = {
-  type: TodoActionKind;
-};
-
 type TodoItem = {
-  id: string;
+  id?: string;
   title: string;
   // content: string;
   // date: Date;
   // completed: boolean;
 };
+enum TodoActionKind {
+  ADD = "ADD",
+  DELETE = "DELETE",
+}
+
+type TodoAction =
+  | { type: TodoActionKind.ADD; todo: TodoItem }
+  | { type: TodoActionKind.DELETE; id: string };
+
 type TodoListState = TodoItem[];
 
 //-------------------------------------------------------------//
-const todoReducer = (state: TodoListState, action: TodoAction) => {
+const todoReducer = (state: TodoListState, action: TodoAction): TodoListState => {
+  // Adding new todo Item
   switch (action.type) {
     case TodoActionKind.ADD: {
-      return state;
+      const { todo } = action;
+      return [...state, { title: todo.title, id: uuidv4() }];
     }
 
     case TodoActionKind.DELETE: {
       return state;
     }
-
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      return state;
     }
   }
 };
@@ -66,10 +67,12 @@ const useTodoMock = ({ dataNum }: Options) => {
 
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
-  const addTodo = () => {
-    console.log("add");
+  const addTodo = (todo: TodoItem) => {
+    dispatch({ type: TodoActionKind.ADD, todo });
   };
-  const deleteTodo = () => {};
+  const deleteTodo = () => {
+    // console.log(10664581);
+  };
   const completeTodo = () => {};
 
   return { todoList: state, addTodo, deleteTodo, completeTodo };

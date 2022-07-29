@@ -8,9 +8,13 @@ const App = () => {
   return (
     <div>
       {todoList.map((todo) => {
-        return <span>{todo.title}</span>;
+        return (
+          <span style={{ display: "block" }} key={todo.id}>
+            {todo.title}
+          </span>
+        );
       })}
-      <button onClick={() => addTodo()}>추가하기</button>
+      <button onClick={() => addTodo({ title: "추가한 아이템" })}>추가하기</button>
     </div>
   );
 };
