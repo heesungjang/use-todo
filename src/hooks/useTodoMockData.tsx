@@ -30,7 +30,6 @@ type TodoListState = TodoItem[];
 
 //-------------------------------------------------------------//
 const todoReducer = (state: TodoListState, action: TodoAction): TodoListState => {
-  // Adding new todo Item
   switch (action.type) {
     case TodoActionKind.ADD: {
       const { todo } = action;
@@ -38,7 +37,9 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
     }
 
     case TodoActionKind.DELETE: {
-      return state;
+      const { id: targetedItemId } = action;
+
+      return [...state].filter((todo) => todo.id !== targetedItemId);
     }
     default: {
       return state;
@@ -67,11 +68,14 @@ const useTodoMock = ({ dataNum }: Options) => {
 
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
+  // Adding new todo item to the state
   const addTodo = (todo: TodoItem) => {
     dispatch({ type: TodoActionKind.ADD, todo });
   };
-  const deleteTodo = () => {
-    // console.log(10664581);
+
+  // Removing a todo item from the state
+  const deleteTodo = (id: string) => {
+    dispatch({ type: TodoActionKind.DELETE, id });
   };
   const completeTodo = () => {};
 

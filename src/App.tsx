@@ -9,9 +9,15 @@ const App = () => {
     <div>
       {todoList.map((todo) => {
         return (
-          <span style={{ display: "block" }} key={todo.id}>
-            {todo.title}
-          </span>
+          <div key={todo.id}>
+            <span style={{ display: "block" }}>{todo.title}</span>
+            <button
+              id={todo.id}
+              onClick={(e: React.MouseEvent<HTMLElement>) => deleteTodo(e.currentTarget.id)}
+            >
+              삭제하기
+            </button>
+          </div>
         );
       })}
       <button onClick={() => addTodo({ title: "추가한 아이템" })}>추가하기</button>
