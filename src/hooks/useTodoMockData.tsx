@@ -15,16 +15,18 @@ type TodoItem = {
   title: string;
   // content: string;
   // date: Date;
-  // completed: boolean;
+  completed?: boolean;
 };
 enum TodoActionKind {
   ADD = "ADD",
   DELETE = "DELETE",
+  COMPLETE = "COMPLETE",
 }
 
 type TodoAction =
   | { type: TodoActionKind.ADD; todo: TodoItem }
-  | { type: TodoActionKind.DELETE; id: string };
+  | { type: TodoActionKind.DELETE; id: string }
+  | { type: TodoActionKind.COMPLETE; id: string };
 
 type TodoListState = TodoItem[];
 
@@ -33,13 +35,24 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
   switch (action.type) {
     case TodoActionKind.ADD: {
       const { todo } = action;
-      return [...state, { title: todo.title, id: uuidv4() }];
+      return [...state, { title: todo.title, id: uuidv4(), completed: todo.completed }];
     }
 
     case TodoActionKind.DELETE: {
       const { id: targetedItemId } = action;
 
       return [...state].filter((todo) => todo.id !== targetedItemId);
+    }
+
+    case TodoActionKind.COMPLETE: {
+      const { id: targetedItemId } = action;
+
+      return [...state].map((todo) => {
+        if (todo.id === targetedItemId) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      });
     }
     default: {
       return state;
@@ -57,12 +70,14 @@ const generateTodoList = (dataNum: number): TodoListState => {
       return {
         id: uuidv4(),
         title: phaseGen.getNoun() + " " + phaseGenCustom.getNoun(),
+        completed: false,
       };
     });
 
   return todoList;
 };
 
+//
 const useTodoMock = ({ dataNum }: Options) => {
   const initialState = generateTodoList(dataNum);
 
@@ -77,9 +92,11 @@ const useTodoMock = ({ dataNum }: Options) => {
   const deleteTodo = (id: string) => {
     dispatch({ type: TodoActionKind.DELETE, id });
   };
-  const completeTodo = () => {};
+  const toggleTodo = (id: string) => {
+    dispatch({ type: TodoActionKind.COMPLETE, id });
+  };
 
-  return { todoList: state, addTodo, deleteTodo, completeTodo };
+  return { todoList: state, addTodo, deleteTodo, toggleTodo };
 };
 
 export default useTodoMock;
