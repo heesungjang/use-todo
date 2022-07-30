@@ -1,5 +1,5 @@
 // REACT
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 //ASSETS
 import { nouns, adjectives, suffixes } from "../assetes/words";
@@ -12,13 +12,14 @@ const PhaseGen = require("korean-random-words");
 type Options = {
   dataNum: number;
   contentLength?: number;
+  useLocalStorage?: boolean;
 };
 
 type TodoItem = {
   id?: string;
   title: string;
   content: string;
-  // date: Date;
+  date?: Date;
   completed?: boolean;
 };
 enum TodoActionKind {
@@ -93,16 +94,25 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
         title: generateTitle(),
         content: generateContent(contentLength),
         completed: false,
+        date: new Date(),
       };
     });
 
   return todoList;
 };
 
-const useTodoMock = ({ dataNum, contentLength = 25 }: Options) => {
-  const initialState = generateTodoList(dataNum, contentLength);
+const useTodoMock = ({ dataNum, contentLength = 25, useLocalStorage = false }: Options) => {
+  // JSON functions
+  const serialize = JSON.stringify;
+  const deserialize = JSON.parse;
 
-  const [state, dispatch] = useReducer(todoReducer, initialState);
+  // Todo States
+  const initialState = generateTodoList(dataNum, contentLength);
+  const localStorageList = window.localStorage.getItem("todo-list");
+  const [state, dispatch] = useReducer(
+    todoReducer,
+    localStorageList ? deserialize(localStorageList) : initialState
+  );
 
   // Adding new todo item to the state
   const addTodo = (todo: TodoItem) => {
@@ -118,6 +128,15 @@ const useTodoMock = ({ dataNum, contentLength = 25 }: Options) => {
   const toggleTodo = (id: string) => {
     dispatch({ type: TodoActionKind.COMPLETE, id });
   };
+
+  // storing or removing todo-list from localStorage
+  useEffect(() => {
+    if (!useLocalStorage) {
+      window.localStorage.removeItem("todo-list");
+    }
+    if (!useLocalStorage) return;
+    window.localStorage.setItem("todo-list", serialize(state));
+  }, [state, serialize]);
 
   return { todoList: state, addTodo, deleteTodo, toggleTodo };
 };
