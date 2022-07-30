@@ -5,8 +5,10 @@ import useTodoMock from "./hooks/useTodoMockData";
 const App = () => {
   const { todoList, addTodo, deleteTodo, toggleTodo } = useTodoMock({
     dataNum: 5,
-    contentLength: 20,
+    contentLength: 50,
   });
+
+  console.log(todoList);
 
   return (
     <div>
@@ -15,6 +17,7 @@ const App = () => {
           return (
             <div key={todo.id}>
               <span style={{ display: "block" }}>{todo.title}</span>
+              <span style={{ display: "block" }}>{todo.content}</span>
               <button
                 id={todo.id}
                 onClick={(e: React.MouseEvent<HTMLElement>) => deleteTodo(e.currentTarget.id)}
@@ -32,7 +35,9 @@ const App = () => {
         }
       })}
 
-      <button onClick={() => addTodo({ title: "추가한 아이템" })}>추가하기</button>
+      <button onClick={() => addTodo({ title: "추가한 아이템", content: "추가하다" })}>
+        추가하기
+      </button>
 
       <span style={{ display: "block" }}>Completed</span>
 

@@ -1,6 +1,9 @@
 // REACT
 import { useReducer } from "react";
 
+//ASSETS
+import { nouns, adjectives, suffixes } from "../assetes/words";
+
 // External Libraries
 import { v4 as uuidv4 } from "uuid";
 const PhaseGen = require("korean-random-words");
@@ -8,13 +11,13 @@ const PhaseGen = require("korean-random-words");
 // Types
 type Options = {
   dataNum: number;
-  contentLength: number;
+  contentLength?: number;
 };
 
 type TodoItem = {
   id?: string;
   title: string;
-  // content: string;
+  content: string;
   // date: Date;
   completed?: boolean;
 };
@@ -35,7 +38,10 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
   switch (action.type) {
     case TodoActionKind.ADD: {
       const { todo } = action;
-      return [...state, { title: todo.title, id: uuidv4(), completed: todo.completed }];
+      return [
+        ...state,
+        { id: uuidv4(), title: todo.title, content: todo.content, completed: todo.completed },
+      ];
     }
 
     case TodoActionKind.DELETE: {
@@ -58,11 +64,24 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
     }
   }
 };
-const generateTitle = () => {
+const generateTitle = (): string => {
   const phaseGen = new PhaseGen();
   const phaseGenCustom = new PhaseGen({ customNouns: ["키우기", "만들기", "찾기"] });
 
   return phaseGen.getNoun() + " " + phaseGenCustom.getNoun();
+};
+
+const generateContent = (contentLength: number): string => {
+  let content = `${nouns[Math.floor(Math.random() * nouns.length)]}는 `;
+
+  while (content.length <= contentLength) {
+    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomSuffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+    content += `${randomAdjective}${randomSuffix} `;
+  }
+  content += `${adjectives[Math.floor(Math.random() * adjectives.length)]}하다.`;
+
+  return content;
 };
 
 const generateTodoList = (dataNum: number, contentLength: number): TodoListState => {
@@ -72,6 +91,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
       return {
         id: uuidv4(),
         title: generateTitle(),
+        content: generateContent(contentLength),
         completed: false,
       };
     });
@@ -79,7 +99,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
   return todoList;
 };
 
-const useTodoMock = ({ dataNum, contentLength = 50 }: Options) => {
+const useTodoMock = ({ dataNum, contentLength = 25 }: Options) => {
   const initialState = generateTodoList(dataNum, contentLength);
 
   const [state, dispatch] = useReducer(todoReducer, initialState);

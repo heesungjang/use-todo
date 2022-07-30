@@ -516,4 +516,4 @@ export const adjectives = [
   "희귀",
 ];
 
-export const firstAdjSuffixes = ["하고", "하지만", "한데", "해도", "해서"];
+export const suffixes = ["하고", "하지만", "한데", "해도", "해서"];
