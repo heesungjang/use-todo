@@ -2,7 +2,7 @@
 import { useEffect, useReducer } from "react";
 
 //ASSETS
-import { nouns, adjectives, suffixes } from "../assetes/words";
+import { nouns, adjectives, suffixes } from "./asset/words";
 
 // External Libraries
 import { v4 as uuidv4 } from "uuid";
@@ -35,6 +35,9 @@ type TodoAction =
 
 type TodoListState = TodoItem[];
 
+/**
+ *
+ */
 const todoReducer = (state: TodoListState, action: TodoAction): TodoListState => {
   switch (action.type) {
     case TodoActionKind.ADD: {
@@ -65,6 +68,10 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
     }
   }
 };
+
+/**
+ *
+ */
 const generateTitle = (): string => {
   const phaseGen = new PhaseGen();
   const phaseGenCustom = new PhaseGen({ customNouns: ["키우기", "만들기", "찾기"] });
@@ -72,6 +79,9 @@ const generateTitle = (): string => {
   return phaseGen.getNoun() + " " + phaseGenCustom.getNoun();
 };
 
+/**
+ *
+ */
 const generateContent = (contentLength: number): string => {
   let content = `${nouns[Math.floor(Math.random() * nouns.length)]}는 `;
 
@@ -85,6 +95,9 @@ const generateContent = (contentLength: number): string => {
   return content;
 };
 
+/**
+ *
+ */
 const generateTodoList = (dataNum: number, contentLength: number): TodoListState => {
   const todoList = Array(dataNum)
     .fill(0)
@@ -101,6 +114,9 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
   return todoList;
 };
 
+/**
+ *
+ */
 const useTodoMock = ({ dataNum, contentLength = 25, useLocalStorage = false }: Options) => {
   // JSON functions
   const serialize = JSON.stringify;
@@ -136,7 +152,7 @@ const useTodoMock = ({ dataNum, contentLength = 25, useLocalStorage = false }: O
     }
     if (!useLocalStorage) return;
     window.localStorage.setItem("todo-list", serialize(state));
-  }, [state, serialize]);
+  }, [state, serialize, useLocalStorage]);
 
   return { todoList: state, addTodo, deleteTodo, toggleTodo };
 };

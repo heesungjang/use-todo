@@ -1,12 +1,12 @@
 //REACT
 import React from "react";
-import useTodoMock from "./hooks/useTodoMockData";
+import useTodoMock from "./hooks/useTodoList";
 
 const App = () => {
   const { todoList, addTodo, deleteTodo, toggleTodo } = useTodoMock({
     dataNum: 5,
     contentLength: 20,
-    useLocalStorage: true,
+    // useLocalStorage: true,
   });
 
   return (
