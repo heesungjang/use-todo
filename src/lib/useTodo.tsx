@@ -109,7 +109,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
 };
 
 /**
- *
+ * 좋아요
  */
 const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }: Options) => {
     // JSON functions
