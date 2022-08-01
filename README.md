@@ -5,19 +5,19 @@
 Install with npm
 
 ```javascript
-npm i use-todo-list
+npm i use-todo
 ```
 
 Install with yarn
 
 ```javascript
-yarn add use-local-storage
+yarn add  use-todo
 ```
 
 # Basic Usage
 
 ```javascript
-import useTodoList from "use-todo-list";
+import useTodo from "use-todo";
 ```
 
 ## Typescript Use
