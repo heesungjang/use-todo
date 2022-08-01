@@ -17,7 +17,37 @@ yarn add  use-todo
 # Basic Usage
 
 ```javascript
-import { useTodo } from 'use-todo';
+import React from 'react';
+
+import { useTodo } from './lib';
+
+function TodoComponent() {
+    const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo();
+
+    return (
+        <div>
+            {todoItems.map((todo) => {
+                return (
+                    // Todo Item
+                    <div
+                        key={todo.id}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            border: '1px solid black'
+                        }}
+                    >
+                        <span>{todo.title}</span>
+                        <span>{todo.content}</span>
+                        <span>{todo.date}</span>
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+export default TodoComponent;
 ```
 
 ## Typescript Use
