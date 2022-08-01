@@ -112,7 +112,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }: Options) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }: Options = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
