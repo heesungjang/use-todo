@@ -4,11 +4,15 @@ declare type Options = {
     useLocalStorage?: boolean;
 };
 declare type TodoItem = {
-    id?: string;
+    id: string;
     title: string;
     content: string;
     date?: string;
     completed?: boolean;
+};
+declare type NewTodoItem = {
+    title: string;
+    content: string;
 };
 declare type TodoListState = TodoItem[];
 /**
@@ -16,7 +20,7 @@ declare type TodoListState = TodoItem[];
  */
 declare const useTodo: ({ dataNum, contentLength, useLocalStorage }?: Options) => {
     todoItems: TodoListState;
-    addTodo: (todo: TodoItem) => void;
+    addTodo: ({ title, content }: NewTodoItem) => void;
     deleteTodo: (id: string) => void;
     toggleCompletion: (id: string) => void;
 };

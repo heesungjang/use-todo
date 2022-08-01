@@ -19,7 +19,15 @@ const todoReducer = (state, action) => {
     switch (action.type) {
         case TodoActionKind.ADD: {
             const { todo } = action;
-            return [...state, { id: uuidv4(), title: todo.title, content: todo.content, completed: todo.completed }];
+            return [
+                ...state,
+                {
+                    id: uuidv4(),
+                    title: todo.title,
+                    content: todo.content,
+                    completed: false
+                }
+            ];
         }
         case TodoActionKind.DELETE: {
             const { id: targetedItemId } = action;
@@ -44,7 +52,9 @@ const todoReducer = (state, action) => {
  */
 const generateTitle = () => {
     const phaseGen = new PhaseGen();
-    const phaseGenCustom = new PhaseGen({ customNouns: ['키우기', '만들기', '찾기'] });
+    const phaseGenCustom = new PhaseGen({
+        customNouns: ['키우기', '만들기', '찾기']
+    });
     return phaseGen.getNoun() + ' ' + phaseGenCustom.getNoun();
 };
 /**
@@ -89,8 +99,12 @@ const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false } = 
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = useReducer(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
     // Adding new todo item to the state
-    const addTodo = (todo) => {
-        dispatch({ type: TodoActionKind.ADD, todo });
+    const addTodo = ({ title, content }) => {
+        const newItem = { title, content };
+        if (title === '' && content === '') {
+            return alert('title and content value is missing');
+        }
+        dispatch({ type: TodoActionKind.ADD, todo: newItem });
     };
     // Removing a todo item from the state
     const deleteTodo = (id) => {

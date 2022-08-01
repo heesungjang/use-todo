@@ -1,10 +1,20 @@
 {
     "name": "use-todo",
-    "version": "0.0.5",
+    "version": "0.0.7",
     "repository": {
         "type": "git",
         "url": "https://github.com/heesungjang/use-todo"
     },
+    "contributors": [
+        "Jiho Kim <crsn1111@gmail.com> (https://github.com/jiho3894/)"
+    ],
+    "keywords": [
+        "todo",
+        "todo list",
+        "react",
+        "react hook",
+        "custom hook"
+    ],
     "description": "React hook for todo list",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
