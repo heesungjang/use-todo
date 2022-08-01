@@ -16,7 +16,7 @@ yarn add  use-todo
 
 # Basic Usage
 
-## 1️⃣ How do you display todo list?
+## 1️. How do you display todo list?
 
 ```javascript
 import React from 'react';
@@ -45,7 +45,7 @@ function TodoComponent() {
 export default TodoComponent;
 ```
 
-## 2️⃣ How do you add new todo item to the list?
+## 2. How do you add new todo item to the list?
 
 ```javascript
 import React from 'react';
