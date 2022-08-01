@@ -1,4 +1,7 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTodo = void 0;
 // REACT
@@ -6,6 +9,7 @@ const react_1 = require("react");
 //ASSETS
 const words_1 = require("./words");
 // External Libraries
+const moment_1 = __importDefault(require("moment"));
 const uuid_1 = require("uuid");
 const PhaseGen = require('korean-random-words');
 var TodoActionKind;
@@ -74,7 +78,7 @@ const generateTodoList = (dataNum, contentLength) => {
             title: generateTitle(),
             content: generateContent(contentLength),
             completed: false,
-            date: new Date()
+            date: (0, moment_1.default)().subtract(10, 'days').calendar()
         };
     });
     return todoList;
@@ -82,7 +86,7 @@ const generateTodoList = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
@@ -99,7 +103,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
         dispatch({ type: TodoActionKind.DELETE, id });
     };
     // Toggle a todo item completion (true / false)
-    const toggleTodo = (id) => {
+    const toggleCompletion = (id) => {
         dispatch({ type: TodoActionKind.COMPLETE, id });
     };
     // storing or removing todo-list from localStorage
@@ -111,7 +115,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
             return;
         window.localStorage.setItem('todo-list', serialize(state));
     }, [state, serialize, useLocalStorage]);
-    return { todoList: state, addTodo, deleteTodo, toggleTodo };
+    return { todoItems: state, addTodo, deleteTodo, toggleCompletion };
 };
 exports.useTodo = useTodo;
 //# sourceMappingURL=useTodo.js.map

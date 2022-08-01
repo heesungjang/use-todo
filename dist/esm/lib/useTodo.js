@@ -3,6 +3,7 @@ import { useEffect, useReducer } from 'react';
 //ASSETS
 import { nouns, adjectives, suffixes } from './words';
 // External Libraries
+import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 const PhaseGen = require('korean-random-words');
 var TodoActionKind;
@@ -71,7 +72,7 @@ const generateTodoList = (dataNum, contentLength) => {
             title: generateTitle(),
             content: generateContent(contentLength),
             completed: false,
-            date: new Date()
+            date: moment().subtract(10, 'days').calendar()
         };
     });
     return todoList;
@@ -79,7 +80,7 @@ const generateTodoList = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
@@ -96,7 +97,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
         dispatch({ type: TodoActionKind.DELETE, id });
     };
     // Toggle a todo item completion (true / false)
-    const toggleTodo = (id) => {
+    const toggleCompletion = (id) => {
         dispatch({ type: TodoActionKind.COMPLETE, id });
     };
     // storing or removing todo-list from localStorage
@@ -108,7 +109,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }) => {
             return;
         window.localStorage.setItem('todo-list', serialize(state));
     }, [state, serialize, useLocalStorage]);
-    return { todoList: state, addTodo, deleteTodo, toggleTodo };
+    return { todoItems: state, addTodo, deleteTodo, toggleCompletion };
 };
 export { useTodo };
 //# sourceMappingURL=useTodo.js.map

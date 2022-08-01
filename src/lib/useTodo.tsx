@@ -5,12 +5,13 @@ import { useEffect, useReducer } from 'react';
 import { nouns, adjectives, suffixes } from './words';
 
 // External Libraries
+import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 const PhaseGen = require('korean-random-words');
 
 // Types
 type Options = {
-    dataNum: number;
+    dataNum?: number;
     contentLength?: number;
     useLocalStorage?: boolean;
 };
@@ -19,7 +20,7 @@ type TodoItem = {
     id?: string;
     title: string;
     content: string;
-    date?: Date;
+    date?: string;
     completed?: boolean;
 };
 enum TodoActionKind {
@@ -101,7 +102,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
                 title: generateTitle(),
                 content: generateContent(contentLength),
                 completed: false,
-                date: new Date()
+                date: moment().subtract(10, 'days').calendar()
             };
         });
 
@@ -109,9 +110,9 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
 };
 
 /**
- * 좋아요
+ *
  */
-const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }: Options) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }: Options) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
@@ -132,7 +133,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }: Optio
     };
 
     // Toggle a todo item completion (true / false)
-    const toggleTodo = (id: string) => {
+    const toggleCompletion = (id: string) => {
         dispatch({ type: TodoActionKind.COMPLETE, id });
     };
 
@@ -145,7 +146,7 @@ const useTodo = ({ dataNum, contentLength = 25, useLocalStorage = false }: Optio
         window.localStorage.setItem('todo-list', serialize(state));
     }, [state, serialize, useLocalStorage]);
 
-    return { todoList: state, addTodo, deleteTodo, toggleTodo };
+    return { todoItems: state, addTodo, deleteTodo, toggleCompletion };
 };
 
 export { useTodo };
