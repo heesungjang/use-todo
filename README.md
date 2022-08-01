@@ -19,7 +19,7 @@ yarn add  use-todo
 ```javascript
 import React from 'react';
 
-import { useTodo } from './lib';
+import { useTodo } from 'use-todo';
 
 function TodoComponent() {
     const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo();
