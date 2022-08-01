@@ -16,7 +16,7 @@ yarn add  use-todo
 
 # Basic Usage
 
-## 1️⃣ How do you use display todo list?
+## 1️⃣ How do you display todo list?
 
 ```javascript
 import React from 'react';
