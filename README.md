@@ -45,7 +45,7 @@ function TodoComponent() {
 export default TodoComponent;
 ```
 
-## 2️⃣ How do you new todo item to the list?
+## 2️⃣ How do you add new todo item to the list?
 
 ```javascript
 import React from 'react';
