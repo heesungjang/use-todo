@@ -17,7 +17,7 @@ yarn add  use-todo
 # Basic Usage
 
 ```javascript
-import useTodo from "use-todo";
+import { useTodo } from 'use-todo';
 ```
 
 ## Typescript Use
