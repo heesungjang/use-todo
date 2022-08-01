@@ -14,7 +14,7 @@ declare type TodoListState = TodoItem[];
 /**
  *
  */
-declare const useTodo: ({ dataNum, contentLength, useLocalStorage }: Options) => {
+declare const useTodo: ({ dataNum, contentLength, useLocalStorage }?: Options) => {
     todoItems: TodoListState;
     addTodo: (todo: TodoItem) => void;
     deleteTodo: (id: string) => void;

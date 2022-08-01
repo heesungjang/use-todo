@@ -80,7 +80,7 @@ const generateTodoList = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false } = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
