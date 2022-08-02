@@ -186,9 +186,9 @@ export default TodoComponent;
 ```javascript
 const options = {
     dataNum: 10, // 👈  Determines initial number of todo items in todo list
-    contentLength: 20 // 👈  Determines the length of todo content
+    contentLength: 20, // 👈  Determines the length of todo content
     useLocalStorage: true, // 👈  Stores todo list state to browser local storage
-    lang:"kr" // 👈  change default language for todo contents to korean
+    lang: 'kr' // 👈  change default language for todo contents to korean
 };
 const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo(options);
 ```
