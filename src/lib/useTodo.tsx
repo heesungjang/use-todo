@@ -149,7 +149,7 @@ const generateTodoListEN = (dataNum: number, contentLength: number): TodoListSta
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'en' }: Options = {}) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'kr' }: Options = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;

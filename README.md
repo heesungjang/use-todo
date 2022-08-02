@@ -2,9 +2,9 @@
 
 ## **Language Support**
 
-**❗️Note**: By default, the <ins>todo item contents are in english</ins>. If you want to change contents to korean provide `{lang:"kr"}` to options.
+**❗️Note**: By default, <ins>todo item contents are in korean</ins>. If you want to change contents to english, provide `{ lang:"en" }` to options.
 
-**❗️Note**: 투두 아이템의 내용은 기본적으로 <ins>영어로 설정되어 있습니다</ins>. 한글 지원을 원하시면 options 값으로 `{lang:"kr"}`을 전달해주세요.
+**❗️Note**: 투두 아이템의 내용은 기본적으로 <ins>한국어로 설정되어 있습니다</ins>. 영어 지원을 원하시면 options 값으로 `{ lang:"en" }`을 전달해주세요.
 
 ### 👉 See [Options](#en-options)
 
