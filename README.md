@@ -1,5 +1,14 @@
 # 📒 A React Hook for 'Todo List'.
 
+## **Language Support**
+
+**❗️Note**: By default, the <ins>todo item contents are in english</ins>. If you want to change contents to korean provide `{lang:"kr"}` to options.
+
+**❗️Note**: 투두 아이템의 내용은 기본적으로 <ins>영어로 설정되어 있습니다</ins>. 한글 지원을 원하시면 options 값으로 `{lang:"kr"}`을 전달해주세요.
+
+### 👉 See [Options](#en-options)
+
+<hr/>
 # Installation
 
 Install with npm
@@ -13,8 +22,6 @@ Install with yarn
 ```javascript
 yarn add  use-todo
 ```
-
-**👉 Note**: By default, the <ins>todo item contents are in english</ins>. If you want to change contents to korean provide `{lang:"kr"}` to options.
 
 ## English documentation
 
@@ -181,6 +188,7 @@ const options = {
     dataNum: 10, // 👈  Determines initial number of todo items in todo list
     contentLength: 20 // 👈  Determines the length of todo content
     useLocalStorage: true, // 👈  Stores todo list state to browser local storage
+    lang:"kr" // 👈  change default language for todo contents to korean
 };
 const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo(options);
 ```

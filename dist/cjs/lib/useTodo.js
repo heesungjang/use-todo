@@ -11,6 +11,7 @@ const words_1 = require("./words");
 // External Libraries
 const moment_1 = __importDefault(require("moment"));
 const uuid_1 = require("uuid");
+var randomSentence = require('random-sentence');
 const PhaseGen = require('korean-random-words');
 var TodoActionKind;
 (function (TodoActionKind) {
@@ -96,12 +97,43 @@ const generateTodoList = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false } = {}) => {
+const generateTitleEN = () => {
+    let title = words_1.verbsEN[Math.floor(Math.random() * words_1.verbsEN.length)] + ' ' + words_1.nounsEN[Math.floor(Math.random() * words_1.nounsEN.length)];
+    title = title.substring(0, 0) + title[0].toLocaleUpperCase() + title.substring(1, title.length);
+    return title;
+};
+/**
+ *
+ */
+const generateContentEN = (contentLength) => {
+    return randomSentence({ min: contentLength, max: contentLength });
+};
+/**
+ *
+ */
+const generateTodoListEN = (dataNum, contentLength) => {
+    const todoList = Array(dataNum)
+        .fill(0)
+        .map(() => {
+        return {
+            id: (0, uuid_1.v4)(),
+            title: generateTitleEN(),
+            content: generateContentEN(contentLength),
+            completed: false,
+            date: (0, moment_1.default)().subtract(10, 'days').calendar()
+        };
+    });
+    return todoList;
+};
+/**
+ *
+ */
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'en' } = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
     // Todo States
-    const initialState = generateTodoList(dataNum, contentLength);
+    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : generateTodoListEN(dataNum, contentLength);
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = (0, react_1.useReducer)(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
     // Adding new todo item to the state

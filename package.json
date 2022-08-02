@@ -1,6 +1,6 @@
 {
     "name": "use-todo",
-    "version": "0.0.8",
+    "version": "1.0.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/heesungjang/use-todo"
@@ -42,6 +42,7 @@
     "dependencies": {
         "korean-random-words": "^1.0.3",
         "moment": "^2.29.4",
+        "random-sentence": "^1.0.4",
         "uuid": "^8.3.2"
     }
 }

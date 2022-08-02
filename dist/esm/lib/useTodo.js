@@ -1,10 +1,11 @@
 // REACT
 import { useEffect, useReducer } from 'react';
 //ASSETS
-import { nouns, adjectives, suffixes } from './words';
+import { nouns, adjectives, suffixes, nounsEN, verbsEN } from './words';
 // External Libraries
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+var randomSentence = require('random-sentence');
 const PhaseGen = require('korean-random-words');
 var TodoActionKind;
 (function (TodoActionKind) {
@@ -90,12 +91,43 @@ const generateTodoList = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false } = {}) => {
+const generateTitleEN = () => {
+    let title = verbsEN[Math.floor(Math.random() * verbsEN.length)] + ' ' + nounsEN[Math.floor(Math.random() * nounsEN.length)];
+    title = title.substring(0, 0) + title[0].toLocaleUpperCase() + title.substring(1, title.length);
+    return title;
+};
+/**
+ *
+ */
+const generateContentEN = (contentLength) => {
+    return randomSentence({ min: contentLength, max: contentLength });
+};
+/**
+ *
+ */
+const generateTodoListEN = (dataNum, contentLength) => {
+    const todoList = Array(dataNum)
+        .fill(0)
+        .map(() => {
+        return {
+            id: uuidv4(),
+            title: generateTitleEN(),
+            content: generateContentEN(contentLength),
+            completed: false,
+            date: moment().subtract(10, 'days').calendar()
+        };
+    });
+    return todoList;
+};
+/**
+ *
+ */
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'en' } = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
     // Todo States
-    const initialState = generateTodoList(dataNum, contentLength);
+    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : generateTodoListEN(dataNum, contentLength);
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = useReducer(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
     // Adding new todo item to the state

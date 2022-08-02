@@ -1,16 +1,18 @@
 // REACT
 import { useEffect, useReducer } from 'react';
 //ASSETS
-import { nouns, adjectives, suffixes } from './words';
+import { nouns, adjectives, suffixes, nounsEN, verbsEN } from './words';
 // External Libraries
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+var randomSentence = require('random-sentence');
 const PhaseGen = require('korean-random-words');
 // Types
 type Options = {
     dataNum?: number;
     contentLength?: number;
     useLocalStorage?: boolean;
+    lang?: string;
 };
 type TodoItem = {
     id: string;
@@ -75,6 +77,7 @@ const generateTitle = (): string => {
     });
     return phaseGen.getNoun() + ' ' + phaseGenCustom.getNoun();
 };
+
 /**
  *
  */
@@ -88,6 +91,7 @@ const generateContent = (contentLength: number): string => {
     content += `${adjectives[Math.floor(Math.random() * adjectives.length)]}하다.`;
     return content;
 };
+
 /**
  *
  */
@@ -105,15 +109,53 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
         });
     return todoList;
 };
+
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false }: Options = {}) => {
+const generateTitleEN = (): string => {
+    let title = verbsEN[Math.floor(Math.random() * verbsEN.length)] + ' ' + nounsEN[Math.floor(Math.random() * nounsEN.length)];
+
+    title = title.substring(0, 0) + title[0].toLocaleUpperCase() + title.substring(1, title.length);
+
+    return title;
+};
+
+/**
+ *
+ */
+const generateContentEN = (contentLength: number): string => {
+    return randomSentence({ min: contentLength, max: contentLength });
+};
+
+/**
+ *
+ */
+const generateTodoListEN = (dataNum: number, contentLength: number): TodoListState => {
+    const todoList = Array(dataNum)
+        .fill(0)
+        .map(() => {
+            return {
+                id: uuidv4(),
+                title: generateTitleEN(),
+                content: generateContentEN(contentLength),
+                completed: false,
+                date: moment().subtract(10, 'days').calendar()
+            };
+        });
+    return todoList;
+};
+
+/**
+ *
+ */
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'en' }: Options = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
     // Todo States
-    const initialState = generateTodoList(dataNum, contentLength);
+    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : generateTodoListEN(dataNum, contentLength);
+
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = useReducer(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
     // Adding new todo item to the state
