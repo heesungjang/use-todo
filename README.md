@@ -1,4 +1,12 @@
-## 📒 A React Hook for 'Todo List'.
+# 📒 A React Hook for 'Todo List'.
+
+## English documentation
+
+1. [How do you display todo list?](#en-header-1)
+2. [How do you add new todo item to the list?](#en-header-2)
+3. [How do you remove a todo item from the list?](#en-header-3)
+4. [How do you change completed state for a todo item?](#en-header-4)
+5. [Options?](#en-options)
 
 # Installation
 
@@ -15,6 +23,8 @@ yarn add  use-todo
 ```
 
 # Basic Usage
+
+<a name="en-header-1"></a>
 
 ## 1️. How do you display todo list?
 
@@ -44,6 +54,8 @@ function TodoComponent() {
 
 export default TodoComponent;
 ```
+
+<a name="en-header-2"></a>
 
 ## 2. How do you add new todo item to the list?
 
@@ -77,7 +89,9 @@ function TodoComponent() {
 export default TodoComponent;
 ```
 
-## 2. How do you remove a todo item from the list?
+<a name="en-header-3"></a>
+
+## 3. How do you remove a todo item from the list?
 
 ```javascript
 import React from 'react';
@@ -111,6 +125,52 @@ function TodoComponent() {
 export default TodoComponent;
 ```
 
-## Typescript Use
+<a name="en-header-4"></a>
+
+## 4. How do you change completed state for a todo item?
+
+```javascript
+import React from 'react';
+
+import { useTodo } from 'use-todo';
+
+function TodoComponent() {
+    const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo();
+
+    const handleComplete = (id: string) => {
+        // change completed state of a todo item
+        toggleCompletion(id); // 👈  pass a todo id to toggleCompletion function
+    };
+    return (
+        <div>
+            {todoItems.map((todo) => {
+                console.log(todo);
+                return (
+                    // Todo Item
+                    <div key={todo.id}>
+                        <span>{todo.title}</span>
+                        <span>{todo.content}</span>
+                        <span>{todo.date}</span>
+                        <button onClick={() => handleComplete(todo.id)}>Complete</button>
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
+
+export default TodoComponent;
+```
+
+<a name="en-options"></a>
 
 # Options
+
+```javascript
+const options = {
+    dataNum: 10, // 👈  Determines initial number of todo items in todo list
+    contentLength: 20 // 👈  Determines the length of todo content
+    useLocalStorage: true, // 👈  Stores todo list state to browser local storage
+};
+const { todoItems, addTodo, deleteTodo, toggleCompletion } = useTodo(options);
+```
