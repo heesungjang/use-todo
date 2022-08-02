@@ -1,11 +1,21 @@
 # 📒 A React Hook for 'Todo List'.
 
+**👉 Note**: By default, the todo item contents are in english. If you want to change contents to korean provide `{lang:"kr"}` to options.
+
 ## English documentation
 
 1. [How do you display todo list?](#en-header-1)
 2. [How do you add new todo item to the list?](#en-header-2)
 3. [How do you remove a todo item from the list?](#en-header-3)
 4. [How do you change completed state for a todo item?](#en-header-4)
+5. [Options?](#en-options)
+
+## Korean documentation
+
+1. [기본 사용법](#en-header-1)
+2. [아이템은 어떻게 추가하나요?](#en-header-2)
+3. [아이템은 어떻게 삭제하나요?](#en-header-3)
+4. [완료 상태는 어떻게 변경하나요?](#en-header-4)
 5. [Options?](#en-options)
 
 # Installation
