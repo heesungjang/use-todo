@@ -1,5 +1,19 @@
 # 📒 A React Hook for 'Todo List'.
 
+# Installation
+
+Install with npm
+
+```javascript
+npm i use-todo
+```
+
+Install with yarn
+
+```javascript
+yarn add  use-todo
+```
+
 **👉 Note**: By default, the todo item contents are in english. If you want to change contents to korean provide `{lang:"kr"}` to options.
 
 ## English documentation
@@ -17,20 +31,6 @@
 3. [아이템은 어떻게 삭제하나요?](#en-header-3)
 4. [완료 상태는 어떻게 변경하나요?](#en-header-4)
 5. [Options?](#en-options)
-
-# Installation
-
-Install with npm
-
-```javascript
-npm i use-todo
-```
-
-Install with yarn
-
-```javascript
-yarn add  use-todo
-```
 
 # Basic Usage
 
