@@ -14,7 +14,7 @@ Install with yarn
 yarn add  use-todo
 ```
 
-**👉 Note**: By default, the todo item contents are in english. If you want to change contents to korean provide `{lang:"kr"}` to options.
+**👉 Note**: By default, the <ins>todo item contents are in english</ins>. If you want to change contents to korean provide `{lang:"kr"}` to options.
 
 ## English documentation
 
