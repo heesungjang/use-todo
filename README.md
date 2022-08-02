@@ -184,13 +184,6 @@ export default TodoComponent;
 # Options
 
 ```javascript
-type Options = {
-    dataNum?: number,
-    contentLength?: number,
-    useLocalStorage?: boolean,
-    lang?: string
-};
-
 const options = {
     dataNum: 10, // 👈  Determines initial number of todo items in todo list
     contentLength: 20, // 👈  Determines the length of todo content
