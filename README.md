@@ -1,5 +1,7 @@
 # 📒 A React Hook for 'Todo List'.
 
+![](https://velog.velcdn.com/images/heesungj7/post/7b0062f3-3c14-4fe8-8a6a-d63d7d1b70e6/image.png)
+
 ## **Language Support**
 
 **❗️Note**: By default, <ins>todo item contents are in korean</ins>. If you want to change contents to english, provide `{ lang:"en" }` to options.
