@@ -9,7 +9,8 @@
 ### 👉 See [Options](#en-options)
 
 <hr/>
-#Installation
+
+# Installation
 
 Install with npm
 
