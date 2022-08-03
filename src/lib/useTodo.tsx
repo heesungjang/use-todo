@@ -154,7 +154,7 @@ const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lan
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
     // Todo States
-    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : generateTodoListEN(dataNum, contentLength);
+    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : lang === 'en' ? generateTodoListEN(dataNum, contentLength) : generateTodoList(dataNum, contentLength);
 
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = useReducer(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
