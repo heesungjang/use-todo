@@ -50,7 +50,8 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
                     id: uuidv4(),
                     title: todo.title,
                     content: todo.content,
-                    completed: false
+                    completed: false,
+                    date: moment().subtract(10, 'days').calendar()
                 }
             ];
         }
@@ -180,7 +181,7 @@ const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lan
     // Adding new todo item to the state
     const addTodo = ({ title, content }: NewTodoItem) => {
         const newItem = { title, content };
-        if (title === '' && content === '') {
+        if (title === '' || content === '') {
             return alert('title and content value is missing');
         }
         dispatch({ type: TodoActionKind.ADD, todo: newItem });
