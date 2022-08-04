@@ -23,6 +23,10 @@ declare const useTodo: ({ dataNum, contentLength, useLocalStorage, lang }?: Opti
     todoItems: TodoListState;
     addTodo: ({ title, content }: NewTodoItem) => void;
     deleteTodo: (id: string) => void;
+    editTodo: (id: string, newContents: {
+        title?: string;
+        content?: string;
+    }) => void;
     toggleCompletion: (id: string) => void;
 };
 export { useTodo };

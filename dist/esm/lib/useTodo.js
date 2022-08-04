@@ -12,6 +12,7 @@ var TodoActionKind;
     TodoActionKind["ADD"] = "ADD";
     TodoActionKind["DELETE"] = "DELETE";
     TodoActionKind["COMPLETE"] = "COMPLETE";
+    TodoActionKind["EDIT"] = "EDIT";
 })(TodoActionKind || (TodoActionKind = {}));
 /**
  *
@@ -39,6 +40,15 @@ const todoReducer = (state, action) => {
             return [...state].map((todo) => {
                 if (todo.id === targetedItemId) {
                     return Object.assign(Object.assign({}, todo), { completed: !todo.completed });
+                }
+                return todo;
+            });
+        }
+        case TodoActionKind.EDIT: {
+            const { id: targetedItemId, newContents } = action;
+            return [...state].map((todo) => {
+                if (todo.id === targetedItemId) {
+                    return Object.assign(Object.assign({}, todo), { title: newContents.title ? newContents.title : todo.title, content: newContents.content ? newContents.content : todo.content });
                 }
                 return todo;
             });
@@ -122,12 +132,12 @@ const generateTodoListEN = (dataNum, contentLength) => {
 /**
  *
  */
-const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'kr' } = {}) => {
+const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lang = 'en' } = {}) => {
     // JSON functions
     const serialize = JSON.stringify;
     const deserialize = JSON.parse;
     // Todo States
-    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : generateTodoListEN(dataNum, contentLength);
+    const initialState = lang === 'kr' ? generateTodoList(dataNum, contentLength) : lang === 'en' ? generateTodoListEN(dataNum, contentLength) : generateTodoList(dataNum, contentLength);
     const localStorageList = window.localStorage.getItem('todo-list');
     const [state, dispatch] = useReducer(todoReducer, localStorageList ? deserialize(localStorageList) : initialState);
     // Adding new todo item to the state
@@ -142,6 +152,12 @@ const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lan
     const deleteTodo = (id) => {
         dispatch({ type: TodoActionKind.DELETE, id });
     };
+    // Edit a todo item contents
+    const editTodo = (id, newContents) => {
+        if (!newContents.title && !newContents.content)
+            return;
+        dispatch({ type: TodoActionKind.EDIT, id, newContents });
+    };
     // Toggle a todo item completion (true / false)
     const toggleCompletion = (id) => {
         dispatch({ type: TodoActionKind.COMPLETE, id });
@@ -155,7 +171,7 @@ const useTodo = ({ dataNum = 5, contentLength = 25, useLocalStorage = false, lan
             return;
         window.localStorage.setItem('todo-list', serialize(state));
     }, [state, serialize, useLocalStorage]);
-    return { todoItems: state, addTodo, deleteTodo, toggleCompletion };
+    return { todoItems: state, addTodo, deleteTodo, editTodo, toggleCompletion };
 };
 export { useTodo };
 //# sourceMappingURL=useTodo.js.map
