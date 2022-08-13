@@ -90,7 +90,7 @@ const todoReducer = (state: TodoListState, action: TodoAction): TodoListState =>
 /**
  *
  */
-const generateTitle = (): string => {
+export const generateTitle = (): string => {
     const phaseGen = new PhaseGen();
     const phaseGenCustom = new PhaseGen({
         customNouns: ['키우기', '만들기', '찾기']
@@ -101,7 +101,7 @@ const generateTitle = (): string => {
 /**
  *
  */
-const generateContent = (contentLength: number): string => {
+export const generateContent = (contentLength: number): string => {
     let content = `${nouns[Math.floor(Math.random() * nouns.length)]}는 `;
     while (content.length <= contentLength) {
         const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
@@ -115,7 +115,7 @@ const generateContent = (contentLength: number): string => {
 /**
  *
  */
-const generateTodoList = (dataNum: number, contentLength: number): TodoListState => {
+export const generateTodoList = (dataNum: number, contentLength: number): TodoListState => {
     const todoList = Array(dataNum)
         .fill(0)
         .map(() => {
@@ -133,7 +133,7 @@ const generateTodoList = (dataNum: number, contentLength: number): TodoListState
 /**
  *
  */
-const generateTitleEN = (): string => {
+export const generateTitleEN = (): string => {
     let title = verbsEN[Math.floor(Math.random() * verbsEN.length)] + ' ' + nounsEN[Math.floor(Math.random() * nounsEN.length)];
 
     title = title.substring(0, 0) + title[0].toLocaleUpperCase() + title.substring(1, title.length);
@@ -144,14 +144,14 @@ const generateTitleEN = (): string => {
 /**
  *
  */
-const generateContentEN = (contentLength: number): string => {
+export const generateContentEN = (contentLength: number): string => {
     return randomSentence({ min: contentLength, max: contentLength });
 };
 
 /**
  *
  */
-const generateTodoListEN = (dataNum: number, contentLength: number): TodoListState => {
+export const generateTodoListEN = (dataNum: number, contentLength: number): TodoListState => {
     const todoList = Array(dataNum)
         .fill(0)
         .map(() => {
